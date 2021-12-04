@@ -5,14 +5,51 @@
     <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
     
     <title>Studimotion</title>
+    <script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
     <script src="index.js"></script>
   </head>
-  <body>
+  <script type="text/javascript">
+    var intervalID = setInterval(update_values,1000);
+    
+      function update_values() {
+            $.getJSON($SCRIPT_ROOT + '/_stuff',
+                   
+          function(data) {
+            $('#result').text(data.result);
+            if (data.result>0.3){
+              document.getElementById("resulttt").textContent="newtext";
+              document.getElementById("resulttt").style.visibility = "visible";
+            }else{
+              document.getElementById("resulttt").style.visibility = "hidden";
+            }
+            console.log(data)
+          });
+          
+        };
+       
+        function stopTextColor() {
+          clearInterval(intervalID);
+        }
+        
+    </script>
+  <body onload="update_values();">
     
     <div class="quiz-container" id="quiz">
       
       <div class="quiz-header">
         <h2 id="question">Question Text</h2>
+        <p>
+          <span id="result">?</span>
+          <span id="resulttt">??</span>
+        <script>
+        document.getElementById("result").innerHTML;
+        document.getElementById("resulttt").innerHTML;
+      
+        </script>
         <ul>
           <li>
             <input type="radio" name="answer" id="a" class="answer">
@@ -33,6 +70,12 @@
             <input type="radio" name="answer" id="d" class="answer">
             <label for="d" id="d_text">Answer</label>
           </li>
+          {%if emotion==0:%}
+          <li>
+            <input type="radio" name="answer" id="d" class="answer">
+            <label for="d" id="d_text">TEST</label>
+          </li>
+          {% endif %}
   
         </ul>
       </div>

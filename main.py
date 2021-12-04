@@ -1,12 +1,20 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, jsonify, request
 from camera import VideoCamera
 from waitress import serve
 
 app = Flask(__name__)
 
+camera2= VideoCamera()
+
+@app.route('/_stuff', methods = ['GET'])
+def stuff():
+    emo= camera2.val
+        
+    return jsonify(result=emo)
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+   return render_template('index.html')
     
 def gen(camera):
     while True:
@@ -16,7 +24,9 @@ def gen(camera):
                
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(VideoCamera()),
+    #return Response(gen(VideoCamera()),
+                    #mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(gen(camera2),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':

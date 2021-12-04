@@ -75,18 +75,21 @@ class VideoCamera(object):
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
           print(self.status)
+          self.val=10
+          print(self.val)
         else:
           self.status="Blinking"
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
-          print(self.status)
+          #print(self.status)
       else:
         self.status="Active"
         self.lastStates[1]=self.lastStates[0]
         self.lastStates[0]=self.status
-        print(self.status)
-        print(self.EAR)
+        #print(self.status)
+        #print(self.EAR)
 
+ 
   def get_frame(self):
     ret, frame = self.video.read()
     self.calculateEyes(frame)
