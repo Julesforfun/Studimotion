@@ -5,14 +5,13 @@ from scipy.spatial import distance
 
 
 class VideoCamera(object):
-  val=0
+  emotion=0
   hog_face_detector = dlib.get_frontal_face_detector()
   dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
   lastValue=0.0
   EAR=1000
   status=""
   lastStates=["",""]
-  var=0
     
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -75,19 +74,20 @@ class VideoCamera(object):
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
           print(self.status)
-          self.val=10
-          print(self.val)
+          self.emotion=2
         else:
           self.status="Blinking"
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
-          #print(self.status)
+          self.emotion=1
+          print(self.status)
       else:
         self.status="Active"
         self.lastStates[1]=self.lastStates[0]
         self.lastStates[0]=self.status
-        #print(self.status)
-        #print(self.EAR)
+        self.emotion=0
+        print(self.status)
+      print(self.EAR)
 
  
   def get_frame(self):
