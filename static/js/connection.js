@@ -1,4 +1,5 @@
 var intervalID = setInterval(update_values,1000);
+var counter=0
     
       function update_values() {
             $.getJSON($SCRIPT_ROOT + '/_stuff',
@@ -13,7 +14,7 @@ var intervalID = setInterval(update_values,1000);
             }
             }else{
               document.getElementById("result").textContent="drowsy";
-              confirmAction();
+              //confirmAction(counter);
               
             }
             console.log(data)
@@ -26,9 +27,11 @@ var intervalID = setInterval(update_values,1000);
         }
 
         function confirmAction() {
+          counter= counter+1;
+          if (counter>10){ 
           let confirmAction = confirm("Sind Sie unterfordert?");
           if (confirmAction) {
             alert("Aufgaben werden angepasst");
-          } 
+          } }
         }
         
