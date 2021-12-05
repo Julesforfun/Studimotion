@@ -14,10 +14,10 @@ var counter=0
             }
             }else{
               document.getElementById("result").textContent="drowsy";
-              //confirmAction(counter);
+              confirmAction();
               
             }
-            console.log(data)
+            //console.log(data)
           });
           
         };
@@ -28,10 +28,13 @@ var counter=0
 
         function confirmAction() {
           counter= counter+1;
-          if (counter>10){ 
-          let confirmAction = confirm("Sind Sie unterfordert?");
-          if (confirmAction) {
-            alert("Aufgaben werden angepasst");
-          } }
+          console.log(counter)
+          if (counter>5){ 
+            let confirmAction = confirm("Sind Sie unterfordert?");
+            counter=0;
+            if (confirmAction) {
+              alert("Aufgaben werden angepasst");
+            } 
+          }
         }
         
