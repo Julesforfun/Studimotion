@@ -1,18 +1,24 @@
 import cv2
 import dlib
 from scipy.spatial import distance
-
+from tensorflow.keras.models import load_model
+from time import sleep
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing import image
+import numpy as np
 
 
 class VideoCamera(object):
   emotion=0
+  emotion_stress=0
   hog_face_detector = dlib.get_frontal_face_detector()
   dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
   lastValue=0.0
   EAR=1000
   status=""
+  status_stress =""
   lastStates=["",""]
-    
+
   def __init__(self):
       self.video = cv2.VideoCapture(0)
 
@@ -93,6 +99,49 @@ class VideoCamera(object):
   def get_frame(self):
     ret, frame = self.video.read()
     self.calculateEyes(frame)
+    self.calculateEmotion(frame)
     ret, jpeg = cv2.imencode('.jpg', frame)
       
     return jpeg.tobytes()
+
+  def calculateEmotion(self, frame): 
+    face_classifier = cv2.CascadeClassifier(r'.\emotionDetectionKeras\haarcascade_frontalface_default.xml')
+    classifier=load_model(r'.\emotionDetectionKeras\model.h5')
+    emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+      
+    #_, frame = self.video.read()
+    labels = []
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_classifier.detectMultiScale(gray)
+
+    for (x,y,w,h) in faces:
+          cv2.rectangle(frame, (x,y), (x+w, y+h), (0,255,255), 2)
+          roi_gray = gray[y:y+h, x:x+w]
+          roi_gray = cv2.resize(roi_gray, (48, 48), interpolation = cv2.INTER_AREA)
+
+          if np.sum([roi_gray])!=0:
+              roi = roi_gray.astype('float')/255.0
+              roi = img_to_array(roi)
+              roi = np.expand_dims(roi, axis=0)
+
+              prediction = classifier.predict(roi)[0]
+              label = emotion_labels[prediction.argmax()]
+              if(label=='Angry' or label=="Sad" or label=="Disgust"):
+                self.status_stress = "stressed"
+                print(label + " -> "+ self.status_stress)
+                self.emotion_stress=1
+              else:
+                self.status_stress = "not stressed"
+                print(label + " -> "+ self.status_stress)
+                self.emotion_stress=0
+                
+              label_position = (x,y-10)
+              cv2.putText(frame, label, label_position, cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
+          else:
+              cv2.putText(frame, 'No Faces', (30,80), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0),2)
+
+          # cv2.imshow('Emotion Detector', frame)
+          #if cv2.waitKey(1) & 0xFF == ord('q'):
+              #break
+    
+    

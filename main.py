@@ -9,8 +9,9 @@ camera2= VideoCamera()
 @app.route('/_stuff', methods = ['GET'])
 def stuff():
     emo= camera2.emotion
+    emo_stress= camera2.emotion_stress
         
-    return jsonify(result=emo)
+    return jsonify(result=emo, result_stress = emo_stress)
 
 @app.route('/')
 def index():
