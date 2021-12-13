@@ -6,6 +6,7 @@ from time import sleep
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class VideoCamera(object):
@@ -17,7 +18,10 @@ class VideoCamera(object):
   EAR=1000
   status=""
   status_stress =""
+  status_underchallenged =""
   lastStates=["",""]
+  results_list = []
+  counter_time = 0
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -77,29 +81,47 @@ class VideoCamera(object):
           cv2.putText(frame,"Are you Sleepy?",(20,400),
           cv2.FONT_HERSHEY_SIMPLEX,2,(0,0,255),4)
           self.status="Drowsy"
+          self.status_underchallenged = "1"
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
           print(self.status)
           self.emotion=2
         else:
           self.status="Blinking"
+          self.status_underchallenged = "0"
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
           self.emotion=1
           print(self.status)
       else:
         self.status="Active"
+        self.status_underchallenged = "0"
         self.lastStates[1]=self.lastStates[0]
         self.lastStates[0]=self.status
         self.emotion=0
         print(self.status)
       print(self.EAR)
 
+  def save_to_csv(self):
+    self.counter_time = self.counter_time + 1 
+    self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
+
+    out = open('out.csv', 'w')
+    for row in self.results_list:
+        for column in row:
+            if isinstance(column, str):
+              out.write('%s;' % column)
+            else:
+              out.write('%i;' % column) 
+        out.write('\n')
+    out.close()
+  
  
   def get_frame(self):
     ret, frame = self.video.read()
     self.calculateEyes(frame)
     self.calculateEmotion(frame)
+    self.save_to_csv()
     ret, jpeg = cv2.imencode('.jpg', frame)
       
     return jpeg.tobytes()
@@ -127,12 +149,12 @@ class VideoCamera(object):
               prediction = classifier.predict(roi)[0]
               label = emotion_labels[prediction.argmax()]
               if(label=='Angry' or label=="Sad" or label=="Disgust"):
-                self.status_stress = "stressed"
-                print(label + " -> "+ self.status_stress)
+                self.status_stress = "1"
+                print(label + " -> stressed")
                 self.emotion_stress=1
               else:
-                self.status_stress = "not stressed"
-                print(label + " -> "+ self.status_stress)
+                self.status_stress = "0"
+                print(label + " -> not stressed")
                 self.emotion_stress=0
                 
               label_position = (x,y-10)
@@ -144,4 +166,4 @@ class VideoCamera(object):
           #if cv2.waitKey(1) & 0xFF == ord('q'):
               #break
     
-    
+
