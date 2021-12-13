@@ -62,7 +62,7 @@ function createChart(){
   
   // Define the axes
   var	xAxis = d3.svg.axis().scale(x)
-  .orient("bottom").ticks(mydata.length);
+  .orient("bottom").ticks(10);
   
   var	yAxis = d3.svg.axis().scale(y)
   .orient("left").ticks(5);
