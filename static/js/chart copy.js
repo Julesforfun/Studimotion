@@ -10,15 +10,22 @@ var svg=null;
 
 
 
-/**d3.csv("/static/data/outtest.csv", function(data) {
+d3.csv("/static/data/outtest.csv", function(data) {
   
   data.forEach(function(d) {
+  /**d['Time'] = +d['Time'];
+  d['Unterfordert'] = +d['Unterfordert'];
+  d['Überfordert'] = +d['Überfordert'];**/
+  /**d.timestep = +(d.timestep);
+  d.under = +d.under;
+  d.over= +d.over**/
+  //console.log(data)
   mydata= data;
   
   });
   
  
-});**/
+});
 
 function showChart() {
   
@@ -30,7 +37,14 @@ function showChart() {
   }else{
     createChart();
   }
+  /**for (i=0; i<mydata.length; i++){
+    timesteps=mydata[i].Time;
+    underchallenged_values= mydata[i].Unterfordert;
+    overchallenged_values= mydata[i].Überfordert;
+  }**/
+
   
+
 }
 
 function createChart(){
@@ -39,8 +53,7 @@ function createChart(){
   graph_visible= true;
 
   // Get the data
-  d3.csv("/static/data/myfile.csv", function(error, data) {
-    mydata=data
+  //d3.csv("/static/data/outtest.csv", function(error, data) {
     mydata.forEach(function(d) {
       d.timestep = +(d.timestep);
       d.under = +d.under;
@@ -115,7 +128,7 @@ function createChart(){
       .attr("class", "y axis")
       .call(yAxis);
   
-  });
+  //});
 
 
 }
