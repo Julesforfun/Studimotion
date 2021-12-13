@@ -9,6 +9,7 @@ var svg=null;
 
 
 
+
 d3.csv("/static/data/outtest.csv", function(data) {
   
   data.forEach(function(d) {
@@ -47,7 +48,6 @@ function showChart() {
 }
 
 function createChart(){
-  //TODO create a line chart
 
   document.getElementById("myBtn").innerText = "Close activity graph";
   graph_visible= true;
@@ -113,6 +113,7 @@ function createChart(){
     
     svg.append("path")		// Add the valueline path.
       .attr("class", "line")
+      .attr("stroke", "red")
       .attr("d", valueline2(mydata));
       
   

@@ -7,7 +7,8 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy
+import pandas as pd 
 
 class VideoCamera(object):
   emotion=0
@@ -20,7 +21,7 @@ class VideoCamera(object):
   status_stress ="0"
   status_underchallenged ="0"
   lastStates=["",""]
-  results_list = []
+  results_list = [["timestep", "under", "over"]]
   counter_time = 0
   csv_initalized= False
 
@@ -104,21 +105,13 @@ class VideoCamera(object):
       print(self.EAR)
 
   def save_to_csv(self):
-    if (self.csv_initalized==False):
-          self.results_list.append(["Time", "Unterfordert", "Überfordert"]) 
-          self.csv_initalized=True 
+    
     self.counter_time = self.counter_time + 1 
     self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
 
-    out = open('out.csv', 'w')
-    for row in self.results_list:
-        for column in row:
-            if isinstance(column, str):
-              out.write('%s;' % column)
-            else:
-              out.write('%i;' % column) 
-        out.write('\n')
-    out.close()
+    pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
+    
+    
   
  
   def get_frame(self):
