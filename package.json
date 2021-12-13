@@ -1,0 +1,23 @@
+{
+  "name": "Studimotion",
+  "version": "1.0.0",
+  "description": "[Medium article](https://medium.com/@jadomene99/integrating-your-opencv-project-into-a-react-component-using-flask-6bcf909c07f4)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julesforfun/Studimotion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julesforfun/Studimotion/issues"
+  },
+  "homepage": "https://github.com/Julesforfun/Studimotion#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}

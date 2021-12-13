@@ -51,7 +51,7 @@ var counter1=0
 
         function confirmAction_Stressed() {
           counter1= counter1+1;
-          console.log(counter1)
+          //console.log(counter1)
           if (counter1>5){ 
             let confirmAction = confirm("Sie scheinen gestresst zu sein. Sind Sie überfordert?");
             counter1=0;

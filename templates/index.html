@@ -7,6 +7,7 @@
     <title>Studimotion</title>
     <script type="text/javascript"
     src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript">
       var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
@@ -23,6 +24,8 @@
        
           <span id="result">?</span>
           <span id="result_stress">?</span>
+          <button id="myBtn">Click me</button>
+          
           
         <ul>
           <li>
@@ -58,6 +61,8 @@
   
     </div>
     <script src="{{ url_for('static',filename='js/index.js')}}"></script>
+    <script src="{{ url_for('static',filename='js/chart.js')}}"></script>
+    
     
   </body>
 </html>

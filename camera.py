@@ -17,11 +17,12 @@ class VideoCamera(object):
   lastValue=0.0
   EAR=1000
   status=""
-  status_stress =""
-  status_underchallenged =""
+  status_stress ="0"
+  status_underchallenged ="0"
   lastStates=["",""]
   results_list = []
   counter_time = 0
+  csv_initalized= False
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -103,6 +104,9 @@ class VideoCamera(object):
       print(self.EAR)
 
   def save_to_csv(self):
+    if (self.csv_initalized==False):
+          self.results_list.append(["Time", "Unterfordert", "Überfordert"]) 
+          self.csv_initalized=True 
     self.counter_time = self.counter_time + 1 
     self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
 
@@ -127,8 +131,8 @@ class VideoCamera(object):
     return jpeg.tobytes()
 
   def calculateEmotion(self, frame): 
-    face_classifier = cv2.CascadeClassifier(r'.\emotionDetectionKeras\haarcascade_frontalface_default.xml')
-    classifier=load_model(r'.\emotionDetectionKeras\model.h5')
+    face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+    classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5')
     emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
       
     #_, frame = self.video.read()
