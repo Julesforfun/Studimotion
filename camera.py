@@ -109,7 +109,7 @@ class VideoCamera(object):
     self.counter_time = self.counter_time + 1 
     self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
 
-    pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
+    pd.DataFrame(self.results_list).to_csv("/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/static/data/myfile.csv", index=None, header=None)
     
     
   
@@ -124,8 +124,8 @@ class VideoCamera(object):
     return jpeg.tobytes()
 
   def calculateEmotion(self, frame): 
-    face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
-    classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5')
+    face_classifier = cv2.CascadeClassifier(r'.\emotionDetectionKeras\haarcascade_frontalface_default.xml')
+    classifier=load_model(r'.\emotionDetectionKeras\model.h5')
     emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
       
     #_, frame = self.video.read()

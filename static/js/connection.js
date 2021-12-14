@@ -48,6 +48,8 @@ var difficulty=0
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
               adaptAnswer(difficulty+1)
+              document.getElementById("circle").style.background='red';
+              document.getElementById("circle_difficulty").textContent="Difficulty: High";
             } 
           }
         }
@@ -61,6 +63,8 @@ var difficulty=0
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
               adaptAnswer(difficulty-1)
+              document.getElementById("circle").style.background='green';
+              document.getElementById("circle_difficulty").textContent="Difficulty: Normal";
             } 
           }
         }
@@ -97,7 +101,7 @@ var difficulty=0
           d_text.innerHTML= "was never"
           a_text.innerHTML= "had never been"
           b_text.innerHTML= "was never being"
-          questionEl.innerHTML="Fill in the right tense : I _______ been in London"
+          questionEl.innerHTML="Fill in the right tense : I _______ in London"
           }
       }
         
