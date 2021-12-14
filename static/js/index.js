@@ -1,18 +1,18 @@
 const quizData = [
   {
-      question: "Which language runs in a web browser?",
-      a: "Java",
-      b: "C",
-      c: "Python",
-      d: "javascript",
+      question: "What means house in German?",
+      a: "Hund",
+      b: "Tier",
+      c: "Hase",
+      d: "Haus",
       correct: "d",
   },
   {
-      question: "What does CSS stand for?",
-      a: "Central Style Sheets",
-      b: "Cascading Style Sheets",
-      c: "Cascading Simple Sheets",
-      d: "Cars SUVs Sailboats",
+      question: "What means table in German?",
+      a: "Tuch",
+      b: "Tisch",
+      c: "Taste",
+      d: "Heft",
       correct: "b",
   },
   {
