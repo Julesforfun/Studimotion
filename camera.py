@@ -7,6 +7,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd 
 
 
 class VideoCamera(object):
@@ -16,12 +17,13 @@ class VideoCamera(object):
   dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
   lastValue=0.0
   EAR=1000
-  status=""
-  status_stress =""
+  status="0"
+  status_stress ="0"
+  results_list = [["timestep", "under", "over"]]
   status_underchallenged =""
   lastStates=["",""]
-  results_list = []
   counter_time = 0
+  csv_initalized= False
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
