@@ -7,8 +7,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import matplotlib.pyplot as plt
-import numpy
-import pandas as pd 
+
 
 class VideoCamera(object):
   emotion=0
@@ -18,12 +17,11 @@ class VideoCamera(object):
   lastValue=0.0
   EAR=1000
   status=""
-  status_stress ="0"
-  status_underchallenged ="0"
+  status_stress =""
+  status_underchallenged =""
   lastStates=["",""]
-  results_list = [["timestep", "under", "over"]]
+  results_list = []
   counter_time = 0
-  csv_initalized= False
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -105,7 +103,6 @@ class VideoCamera(object):
       print(self.EAR)
 
   def save_to_csv(self):
-    
     self.counter_time = self.counter_time + 1 
     self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
 
@@ -118,6 +115,7 @@ class VideoCamera(object):
     ret, frame = self.video.read()
     self.calculateEyes(frame)
     self.calculateEmotion(frame)
+    self.detectYawn(frame)
     self.save_to_csv()
     ret, jpeg = cv2.imencode('.jpg', frame)
       
@@ -162,5 +160,94 @@ class VideoCamera(object):
           # cv2.imshow('Emotion Detector', frame)
           #if cv2.waitKey(1) & 0xFF == ord('q'):
               #break
+    
+  def getting_landmarks(self, frame):
+      rects = self.hog_face_detector(frame, 1)
+
+      if len(rects) > 1:
+          return "error"
+      if len(rects) == 0:
+          return "error"
+      return np.matrix([[p.x, p.y] for p in self.dlib_facelandmark(frame, rects[0]).parts()])
+
+  def annotate_landmarks(self, frame, landmarks):
+      im = frame.copy()
+      for idx, point in enumerate(landmarks):
+          pos = (point[0, 0], point[0,1])
+          cv2.putText(im, str(idx), pos, fontFace=cv2.FONT_HERSHEY_SCRIPT_SIMPLEX, fontScale=0.4, color=(1, 2, 255))
+          cv2.circle(im, pos, 3, color=(0, 2, 2))
+      return im
+
+  def top_lip(self, landmarks):
+      top_lip_pts = []
+      for i in range(50,53):
+          top_lip_pts.append(landmarks[i])
+      for i in range(61,64):
+          top_lip_pts.append(landmarks[i])
+      top_lip_all_pts = np.squeeze(np.asarray(top_lip_pts))
+      top_lip_mean = np.mean(top_lip_pts, axis=0)
+      return int(top_lip_mean[:,1])
+
+  def bottom_lip(self, landmarks):
+      bottom_lip_pts = []
+      for i in range(65,68):
+          bottom_lip_pts.append(landmarks[i])
+      for i in range(56,59):
+          bottom_lip_pts.append(landmarks[i])
+      bottom_lip_all_pts = np.squeeze(np.asarray(bottom_lip_pts))
+      bottom_lip_mean = np.mean(bottom_lip_pts, axis=0)
+      return int(bottom_lip_mean[:,1])
+
+  #oder (self, frame)?
+  def mouth_open(self, image):
+      landmarks = self.getting_landmarks(image)
+
+      if landmarks == "error":
+          return image, 0
+      
+      image_with_landmarks = self.annotate_landmarks(image, landmarks)
+      top_lip_center = self.top_lip(landmarks)
+      bottom_lip_center = self.bottom_lip(landmarks)
+      lip_distance = abs(top_lip_center - bottom_lip_center)
+      return image_with_landmarks, lip_distance
+
+  def detectYawn (self, frame):
+      #cap = cv2.VideoCapture(0)
+      yawns = 0
+      yawn_status = False
+      
+      #ret, frame = cap.read()
+      image_with_landmarks, lip_distance = self.mouth_open(frame)
+
+      prev_yawn_status = yawn_status
+
+      if lip_distance > 35:
+          yawn_status = True
+          cv2.putText(frame, "Tired? Get a coffee ;)", (50, 450), cv2.FONT_HERSHEY_COMPLEX, 1,(0,0,255),2)
+          print("yawning")
+
+              #from pygame import mixer
+              #mixer.init()
+              #mixer.music.load('sth.mp3')
+              #mixer.music.play()
+
+          output_text = "Yawn Count: " + str(yawns + 1)
+              
+          cv2.putText(frame, output_text, (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,127),2)
+      else:
+          yawn_status = False
+
+      if prev_yawn_status == True and yawn_status == False:
+          yawns += 1
+              
+      #cv2.imshow('Live Landmarks', image_with_landmarks)
+      #cv2.imshow('Yawn Detection', frame)
+
+      #if cv2.waitKey(1) == 13:
+      #    break
+
+      #cap.release()
+      #cv2.destroyAllWindows()
+
     
 
