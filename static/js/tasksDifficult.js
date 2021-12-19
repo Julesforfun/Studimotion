@@ -1,15 +1,5 @@
 var quizDataDifficult = [
-  {
-      question: "Im Laufe der _______________ entstanden die verschiedenen Tierarten.",
-      a: "Evolution",
-      b: "Evaluation",
-      c: "Evaporation",
-      d: "Kultivierung",
-      e: "Keine Antwort ist richtig",
-      correct: "a",
-      pic: "no",
-      eingabe: "no",
-    },
+
     {
     question: " ",
     a: "a",
