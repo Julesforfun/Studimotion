@@ -7,6 +7,8 @@ const a_text = document.getElementById("a_text")
 const b_text = document.getElementById('b_text')
 const c_text = document.getElementById('c_text')
 const d_text = document.getElementById('d_text')
+const e_text = document.getElementById('e_text')
+const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
 
 
@@ -21,17 +23,49 @@ function loadQuiz() {
 
   const currentQuizData = quizDataNormal[currentQuiz]
 
-  if (currentQuizData.pic!=="no"){
+  if (difficulty==-1){
 
-    console.log("/static/img/" +currentQuizData.pic)
+    const currentQuizData = quizDataEasy[currentQuiz]
+  }
 
-    document.getElementById("taskpic").src = "/static/img/taskNormal" +currentQuiz+ ".png";
+  if (difficulty==1){
+
+    const currentQuizData = quizDataDifficult[currentQuiz]
+  }
+
+  
+
+  if (currentQuizData.eingabe=="yes"){
+
+    document.getElementById("mysolution").style.visibility = "visible";
+    eingabeLabel.style.visibility = "visible";
+    
+  }else{
+
+    document.getElementById("mysolution").style.visibility = "hidden";
+    eingabeLabel.style.visibility="hidden";
+  }
+
+
+  if (currentQuizData.pic=="no"){
+    
+    document.getElementById("taskpic").style.visibility = "hidden";
+    document.getElementById("taskpic").style.width = "0";
+    document.getElementById("taskpic").style.height = "0";
+    
+  }else{
+    document.getElementById("taskpic").style.width = "300px";
+    document.getElementById("taskpic").style.height = "200px";
+    document.getElementById("taskpic").style.visibility = "visible";
+    document.getElementById("taskpic").src = "/static/img/" +currentQuizData.pic;
+    
   }
   questionEl.innerText = currentQuizData.question
   a_text.innerText = currentQuizData.a
   b_text.innerText = currentQuizData.b
   c_text.innerText = currentQuizData.c
   d_text.innerText = currentQuizData.d
+  e_text.innerText = currentQuizData.e
  
  
 }
