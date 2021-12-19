@@ -48,8 +48,8 @@ var difficulty=0
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
               adaptAnswer(difficulty+1)
-              document.getElementById("circle").style.background='red';
-              document.getElementById("circle_difficulty").textContent="Difficulty: High";
+              //document.getElementById("circle").style.background='red';
+              //document.getElementById("circle_difficulty").textContent="Difficulty: High";
             } 
           }
         }
@@ -63,8 +63,8 @@ var difficulty=0
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
               adaptAnswer(difficulty-1)
-              document.getElementById("circle").style.background='green';
-              document.getElementById("circle_difficulty").textContent="Difficulty: Normal";
+              //document.getElementById("circle").style.background='green';
+              //document.getElementById("circle_difficulty").textContent="Difficulty: Normal";
             } 
           }
         }
@@ -87,13 +87,17 @@ var difficulty=0
             buttonc.style.visibility="hidden"
             buttond.style.visibility="hidden" 
             difficulty=-1;
+            document.getElementById("circle").style.background='grey';
+            document.getElementById("circle_difficulty").textContent="Difficulty: Light";
           }else{
-            document.getElementById("myBtn").innerText = "Close activity graph";
+            
             c_text.style.visibility = "visible"
             d_text.style.visibility = "visible"
             buttonc.style.visibility="visible"
             buttond.style.visibility="visible" 
             difficulty=0;
+            document.getElementById("circle").style.background='green';
+            document.getElementById("circle_difficulty").textContent="Difficulty: Normal";
         }
         if (value==1){
           
@@ -102,6 +106,9 @@ var difficulty=0
           a_text.innerHTML= "had never been"
           b_text.innerHTML= "was never being"
           questionEl.innerHTML="Fill in the right tense : I _______ in London"
+
+          document.getElementById("circle").style.background='red';
+          document.getElementById("circle_difficulty").textContent="Difficulty: High";
           }
       }
         

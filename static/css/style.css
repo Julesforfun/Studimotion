@@ -90,3 +90,8 @@ path {
   background: green;
   margin-left: 45%;
 }
+
+#taskpic {
+  width: 300px;
+  height: 250px;
+}

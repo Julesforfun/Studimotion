@@ -1,39 +1,4 @@
-const quizData = [
-  {
-      question: "What is 'house' in German?",
-      a: "Haus",
-      b: "Tier",
-      c: "Hase",
-      d: "Hund",
-      correct: "a",
-  },
-  {
-      question: "What is 'table' in German?",
-      a: "Tuch",
-      b: "Tisch",
-      c: "Taste",
-      d: "Heft",
-      correct: "b",
-  },
-  {
-      question: "What is 'Gabel' in English?",
-      a: "Fork",
-      b: "Knife",
-      c: "Spoon",
-      d: "Cup",
-      correct: "a",
-  },
-  {
-      question: "What is 'Tier' in English?",
-      a: "heart",
-      b: "animal",
-      c: "forest",
-      d: "cat",
-      correct: "b",
-  },
 
-
-];
 
 const quiz= document.getElementById("quiz")
 const answerEls = document.querySelectorAll('.answer')
@@ -54,13 +19,21 @@ function loadQuiz() {
 
   deselectAnswers()
 
-  const currentQuizData = quizData[currentQuiz]
+  const currentQuizData = quizDataNormal[currentQuiz]
 
+  if (currentQuizData.pic!=="no"){
+
+    console.log("/static/img/" +currentQuizData.pic)
+
+    document.getElementById("taskpic").src = "/static/img/taskNormal" +currentQuiz+ ".png";
+  }
   questionEl.innerText = currentQuizData.question
   a_text.innerText = currentQuizData.a
   b_text.innerText = currentQuizData.b
   c_text.innerText = currentQuizData.c
   d_text.innerText = currentQuizData.d
+ 
+ 
 }
 
 function deselectAnswers() {
@@ -81,17 +54,17 @@ function getSelected() {
 submitBtn.addEventListener('click', () => {
   const answer = getSelected()
   if(answer) {
-     if(answer === quizData[currentQuiz].correct) {
+     if(answer === quizDataNormal[currentQuiz].correct) {
          score++
      }
 
      currentQuiz++
 
-     if(currentQuiz < quizData.length) {
+     if(currentQuiz < quizDataNormal.length) {
          loadQuiz()
      } else {
          quiz.innerHTML = `
-         <h2>You answered ${score}/${quizData.length} questions correctly</h2>
+         <h2>You answered ${score}/${quizDataNormal.length} questions correctly</h2>
 
          <button onclick="location.reload()">Reload</button>
          `
