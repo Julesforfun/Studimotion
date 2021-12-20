@@ -1,7 +1,7 @@
 var quizDataEasy = [
   {
       
-    question: " ",
+    question: " test easy",
     a: "a",
     b: "b",
     c: "c",

@@ -12,27 +12,37 @@ const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
 
 
-let currentQuiz = 0
+//let currentQuiz = 0
 let score = 0
 
-loadQuiz()
+//const currentQuizData = quizDataNormal[currentQuiz]
+//getQuizData(difficulty)
+loadQuiz();
+
+function getQuizData(value){
+  if (value===1){
+    
+    currentQuizData = quizDataDifficult[currentQuiz]
+  }
+  if (value===-1){
+    
+    currentQuizData = quizDataEasy[currentQuiz]
+  }
+
+  if (value===0){
+    
+    currentQuizData = quizDataNormal[currentQuiz]
+  }
+  difficulty=value;
+  setTimeout(function() {  
+    loadQuiz();
+    adaptDiffCircle(difficulty);
+}, 1000);
+}
 
 function loadQuiz() {
 
-  deselectAnswers()
-
-  const currentQuizData = quizDataNormal[currentQuiz]
-
-  if (difficulty==-1){
-
-    const currentQuizData = quizDataEasy[currentQuiz]
-  }
-
-  if (difficulty==1){
-
-    const currentQuizData = quizDataDifficult[currentQuiz]
-  }
-
+  deselectAnswers();
   
 
   if (currentQuizData.eingabe=="yes"){
@@ -95,7 +105,9 @@ submitBtn.addEventListener('click', () => {
      currentQuiz++
 
      if(currentQuiz < quizDataNormal.length) {
-         loadQuiz()
+         //loadQuiz(difficulty)
+         getQuizData(difficulty)
+         loadQuiz();
      } else {
          quiz.innerHTML = `
          <h2>You answered ${score}/${quizDataNormal.length} questions correctly</h2>

@@ -1,14 +1,14 @@
 var quizDataDifficult = [
 
     {
-    question: " ",
+    question: "test diff ",
     a: "a",
     b: "b",
     c: "c",
     d: "d",
     e: "e",
     correct: "b",
-    pic: "taskNormal0.png",
+    pic: "taskNormal11.png",
     eingabe: "no",
   },
   {
