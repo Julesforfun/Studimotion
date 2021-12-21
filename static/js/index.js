@@ -11,6 +11,13 @@ const e_text = document.getElementById('e_text')
 const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
 
+var answeredCorrectNormal=[]
+fillListswithAnswers(quizDataNormal, answeredCorrectNormal)
+var answeredCorrectDifficult=[]
+fillListswithAnswers(quizDataDifficult, answeredCorrectDifficult)
+var answeredCorrectEasy=[]
+fillListswithAnswers(quizDataEasy, answeredCorrectEasy)
+
 
 //let currentQuiz = 0
 let score = 0
@@ -20,24 +27,67 @@ let score = 0
 loadQuiz();
 
 function getQuizData(value){
-  if (value===1){
-    
-    currentQuizData = quizDataDifficult[currentQuiz]
+  if (difficulty!=value){
+    currentQuiz=0
   }
-  if (value===-1){
-    
-    currentQuizData = quizDataEasy[currentQuiz]
-  }
+  setTimeout(function() { 
+    if (value===1){
 
-  if (value===0){
-    
-    currentQuizData = quizDataNormal[currentQuiz]
-  }
+      getNextQuestionIndex(answeredCorrectDifficult);
+     
+    }
+    if (value===-1){
+      
+      getNextQuestionIndex(answeredCorrectEasy);
+    }
+  
+    if (value===0){
+      console.log("anteorten2222!!!"+answeredCorrectNormal);
+      getNextQuestionIndex(answeredCorrectNormal);
+      
+    }
+}, 1000);
+  
   difficulty=value;
-  setTimeout(function() {  
+  setTimeout(function() { 
+    setQuiz(value); 
+}, 1000);
+  setTimeout(function() { 
     loadQuiz();
     adaptDiffCircle(difficulty);
 }, 1000);
+}
+
+function setQuiz(value){
+  if (value===1){
+         currentQuizData = quizDataDifficult[currentQuiz]
+    
+  }
+  if (value===-1){
+   
+    currentQuizData = quizDataEasy[currentQuiz]
+    
+  }
+
+  if (value===0){
+      currentQuizData = quizDataNormal[currentQuiz];
+      console.log("currentquizswtQuiz"+currentQuiz)
+      console.log(currentQuizData);
+    
+  }
+}
+
+function getNextQuestionIndex(mylist){
+
+  console.log("currentquizgetnextindex"+currentQuiz)
+
+  for (let i = currentQuiz; i < mylist.length; i++) { 
+    if (mylist[i]==false){
+      currentQuiz=i; 
+      break;
+    }
+  }
+  
 }
 
 function loadQuiz() {
@@ -94,15 +144,41 @@ function getSelected() {
   return answer
 }
 
+function fillListswithAnswers(mylist, filllist){
+  for (let i = 0; i < mylist.length; i++) { 
+    filllist[i]=false;
+  }
+}
+
+function saveCorrectAnswers(correctA){
+
+  if (difficulty==0){  
+      answeredCorrectNormal[currentQuiz]=correctA;
+      console.log("anteorten!!!"+answeredCorrectNormal);
+  }
+  if (difficulty==1){  
+    answeredCorrectDifficult[currentQuiz]=correctA;
+  }
+  if (difficulty==0){  
+  answeredCorrectEasy[currentQuiz]=correctA;
+  }
+  
+}
+
 
 submitBtn.addEventListener('click', () => {
   const answer = getSelected()
   if(answer) {
-     if(answer === quizDataNormal[currentQuiz].correct) {
+     //if(answer === quizDataNormal[currentQuiz].correct) {
+      if(answer === currentQuizData.correct) {
          score++
+         saveCorrectAnswers(true);
+     }else{
+      saveCorrectAnswers(false);
      }
 
-     currentQuiz++
+     setTimeout(function() { 
+      currentQuiz++
 
      if(currentQuiz < quizDataNormal.length) {
          //loadQuiz(difficulty)
@@ -115,5 +191,7 @@ submitBtn.addEventListener('click', () => {
          <button onclick="location.reload()">Reload</button>
          `
      }
+  }, 1000);
+     
   }
 })

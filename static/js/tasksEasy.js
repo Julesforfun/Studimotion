@@ -23,7 +23,7 @@ var quizDataEasy = [
     eingabe: "no",
   },
   {
-      qquestion: " ",
+      question: " ",
       a: "6",
       b: "17",
       c: "19",

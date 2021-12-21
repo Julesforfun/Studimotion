@@ -43,14 +43,15 @@ var currentQuizData = quizDataNormal[currentQuiz]
 
         function confirmAction() {
           counter= counter+1;
-          console.log(counter)
+          //console.log(counter)
           if (counter>5 && difficulty!=1){ 
             let confirmAction = confirm("Sind Sie unterfordert?");
             counter=0;
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
               
-              console.log("diff"+difficulty)
+              //console.log("diff"+difficulty)
+              
               getQuizData(difficulty+1)
               
             } 
@@ -65,6 +66,7 @@ var currentQuizData = quizDataNormal[currentQuiz]
             counter1=0;
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
+              
               getQuizData(difficulty-1);              
             } 
           }
