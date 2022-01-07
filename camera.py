@@ -124,15 +124,10 @@ class VideoCamera(object):
     return jpeg.tobytes()
 
   def calculateEmotion(self, frame): 
-<<<<<<< HEAD
-    face_classifier = cv2.CascadeClassifier('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
-    classifier=load_model('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/model.h5', compile=False)
-=======
     #face_classifier = cv2.CascadeClassifier(r'.\emotionDetectionKeras\haarcascade_frontalface_default.xml')
     #classifier=load_model(r'.\emotionDetectionKeras\model.h5')
     face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
     classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5')
->>>>>>> tasks
     emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
       
     #_, frame = self.video.read()
