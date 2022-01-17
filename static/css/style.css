@@ -95,3 +95,6 @@ path {
   width: 300px;
   height: 250px;
 }
+#question {
+  font: 18px Arial, sans-serif;
+}

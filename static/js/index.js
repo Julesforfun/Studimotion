@@ -173,11 +173,12 @@ submitBtn.addEventListener('click', () => {
       if(answer === currentQuizData.correct) {
          score++
          saveCorrectAnswers(true);
-     }else{
-      saveCorrectAnswers(false);
-     }
+      }else{
+        saveCorrectAnswers(false);
+      }
 
      setTimeout(function() { 
+       saveLoggingData(currentQuiz, difficulty)
       currentQuiz++
 
      if(currentQuiz < quizDataNormal.length) {
