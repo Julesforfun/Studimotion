@@ -8,7 +8,8 @@ var numberOfTimesForDetection=3;
 let currentQuiz = 0
 var currentQuizData = quizDataNormal[currentQuiz]
 var current_logging= []
-var logging_data= [["current_var_bored", "current_var_stressed", "interpretation"]]
+var logging_data= [["current_var_bored/TN", "current_var_stressed/Diff", "interpretation/answ"]]
+var gaveAnswer= "noAnswer";
 
     
       function update_values() {
@@ -70,7 +71,7 @@ var logging_data= [["current_var_bored", "current_var_stressed", "interpretation
               counter_Stressed=0;
               if (confirmAction) {
                 alert("Aufgaben werden angepasst");
-                saveLoggingData(currentQuiz, difficulty);
+                saveLoggingData(currentQuiz, difficulty, "noAnswer");
                 getQuizData(difficulty+1);
               } 
             }
@@ -88,7 +89,7 @@ var logging_data= [["current_var_bored", "current_var_stressed", "interpretation
             counter_Bored=0;
             if (confirmAction) {
               alert("Aufgaben werden angepasst");
-              saveLoggingData(currentQuiz, difficulty);
+              saveLoggingData(currentQuiz, difficulty, "noAnswer");
               getQuizData(difficulty-1);              
             } 
           }
@@ -144,15 +145,19 @@ var logging_data= [["current_var_bored", "current_var_stressed", "interpretation
 
       }
 
-      function saveLoggingData(taskNumber, diff){
+      function saveLoggingData(taskNumber, diff, currgaveAnswer ){
+        console.log("taskNumber: "+ taskNumber);
+        console.log("diffic: "+ diff);
         //var array = [["name", "age", "height"], ["name2", "age2", "height2"]];
-        var array= logging_data;
-        interpretdetections(array);
-        setTimeout(function() { 
+        var myyarray= logging_data;
+        interpretdetections(myyarray);
+        setTimeout(function() {
+          
+          myyarray.push([taskNumber, diff, currgaveAnswer]);
           var file = "data:text/csv;charset=utf-8,";
   
-          for (i=0; i<array.length; i++){
-            var csv = array[i].join(",");
+          for (i=0; i<myyarray.length; i++){
+            var csv = myyarray[i].join(",");
             file= file+csv+"\n";
           }
           
@@ -165,7 +170,7 @@ var logging_data= [["current_var_bored", "current_var_stressed", "interpretation
           document.body.appendChild(link);
           link.click();
         }, 1000);
-        logging_data=[];   
+        logging_data=[["current_var_bored/TN", "current_var_stressed/Diff", "interpretation/answ"]];   
       }
 
       
