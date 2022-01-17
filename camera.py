@@ -20,10 +20,11 @@ class VideoCamera(object):
   status="0"
   status_stress ="0"
   results_list = [["timestep", "under", "over"]]
-  status_underchallenged =""
+  status_underchallenged ="0"
   lastStates=["",""]
   counter_time = 0
   csv_initalized= False
+
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -86,7 +87,7 @@ class VideoCamera(object):
           self.status_underchallenged = "1"
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
-          print(self.status)
+          #print(self.status)
           self.emotion=2
         else:
           self.status="Blinking"
@@ -94,19 +95,36 @@ class VideoCamera(object):
           self.lastStates[1]=self.lastStates[0]
           self.lastStates[0]=self.status
           self.emotion=1
-          print(self.status)
+          #print(self.status)
       else:
         self.status="Active"
         self.status_underchallenged = "0"
         self.lastStates[1]=self.lastStates[0]
         self.lastStates[0]=self.status
         self.emotion=0
-        print(self.status)
-      print(self.EAR)
+        #print(self.status)
+      #print(self.EAR)
+
+  def detectionInterpreter(self):   
+        
+        if (self.status_underchallenged=="1" and self.status_stress=="1"):
+          return "2";
+            
+        if (self.status_underchallenged=="0" and self.status_stress=="0"):
+          return "1";
+            
+        if (self.status_underchallenged=="1" and self.status_stress=="0"):
+          return "0";
+            
+        if (self.status_underchallenged=="0" and self.status_stress=="1"):
+          return "2";
+        
 
   def save_to_csv(self):
     self.counter_time = self.counter_time + 1 
-    self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
+    moood= self.detectionInterpreter()
+    #self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
+    self.results_list.append([self.counter_time, moood, 0])
 
     pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
     
@@ -147,11 +165,11 @@ class VideoCamera(object):
               label = emotion_labels[prediction.argmax()]
               if(label=='Angry' or label=="Sad" or label=="Disgust"):
                 self.status_stress = "1"
-                print(label + " -> stressed")
+                #print(label + " -> stressed")
                 self.emotion_stress=1
               else:
                 self.status_stress = "0"
-                print(label + " -> not stressed")
+                #print(label + " -> not stressed")
                 self.emotion_stress=0
                 
               label_position = (x,y-10)
@@ -226,7 +244,7 @@ class VideoCamera(object):
       if lip_distance > 35:
           yawn_status = True
           cv2.putText(frame, "Tired? Get a coffee ;)", (50, 450), cv2.FONT_HERSHEY_COMPLEX, 1,(0,0,255),2)
-          print("yawning")
+          #print("yawning")
 
               #from pygame import mixer
               #mixer.init()
@@ -250,6 +268,10 @@ class VideoCamera(object):
 
       #cap.release()
       #cv2.destroyAllWindows()
+      
+      
+      
+      
 
     
 

@@ -42,7 +42,7 @@ function getQuizData(value){
     }
   
     if (value===0){
-      console.log("anteorten2222!!!"+answeredCorrectNormal);
+      //console.log("anteorten2222!!!"+answeredCorrectNormal);
       getNextQuestionIndex(answeredCorrectNormal);
       
     }
@@ -71,15 +71,15 @@ function setQuiz(value){
 
   if (value===0){
       currentQuizData = quizDataNormal[currentQuiz];
-      console.log("currentquizswtQuiz"+currentQuiz)
-      console.log(currentQuizData);
+      //console.log("currentquizswtQuiz"+currentQuiz)
+      //console.log(currentQuizData);
     
   }
 }
 
 function getNextQuestionIndex(mylist){
 
-  console.log("currentquizgetnextindex"+currentQuiz)
+  //console.log("currentquizgetnextindex"+currentQuiz)
 
   for (let i = currentQuiz; i < mylist.length; i++) { 
     if (mylist[i]==false){
@@ -154,7 +154,7 @@ function saveCorrectAnswers(correctA){
 
   if (difficulty==0){  
       answeredCorrectNormal[currentQuiz]=correctA;
-      console.log("anteorten!!!"+answeredCorrectNormal);
+      //console.log("anteorten!!!"+answeredCorrectNormal);
   }
   if (difficulty==1){  
     answeredCorrectDifficult[currentQuiz]=correctA;
@@ -180,8 +180,7 @@ submitBtn.addEventListener('click', () => {
       }
 
      setTimeout(function() { 
-       console.log("-1:"+currentQuizData.question)
-       console.log("-2:"+gaveAnswer)
+      
        saveLoggingData(currentQuiz, difficulty, gaveAnswer)
       currentQuiz++
 

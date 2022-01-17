@@ -47,6 +47,7 @@ function createChart(){
       d.over= +d.over
       
     });
+    console.log(mydata)
   
     // Set the dimensions of the canvas / graph
   var	margin = {top: 30, right: 20, bottom: 30, left: 50},
@@ -65,7 +66,11 @@ function createChart(){
   .orient("bottom").ticks(10);
   
   var	yAxis = d3.svg.axis().scale(y)
-  .orient("left").ticks(5);
+  .orient("left").ticks(2);
+
+  let tickLabels = ['Unt.','Nor.','Üb.'];
+  yAxis.tickFormat((d,i) => tickLabels[i]);
+  //yAxis.tickSize(-200);
   
   // Define the line
   var	valueline = d3.svg.line()
@@ -73,9 +78,9 @@ function createChart(){
   .y(function(d) { return y(d.under); });
   
   // Define the line
-  var	valueline2 = d3.svg.line()
-  .x(function(d) { return x(d.timestep); })
-  .y(function(d) { return y(d.over); });
+  //var	valueline2 = d3.svg.line()
+  //.x(function(d) { return x(d.timestep); })
+  //.y(function(d) { return y(d.over); });
   
   // Adds the svg canvas
   svg = d3.select("#quiz")
@@ -100,8 +105,8 @@ function createChart(){
     
     svg.append("path")		// Add the valueline path.
       .attr("class", "line")
-      .attr("stroke", "red")
-      .attr("d", valueline2(mydata));
+      .attr("stroke", "red");
+      //.attr("d", valueline2(mydata));
       
   
     // Add the X Axis

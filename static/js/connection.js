@@ -146,8 +146,7 @@ var gaveAnswer= "noAnswer";
       }
 
       function saveLoggingData(taskNumber, diff, currgaveAnswer ){
-        console.log("taskNumber: "+ taskNumber);
-        console.log("diffic: "+ diff);
+        
         //var array = [["name", "age", "height"], ["name2", "age2", "height2"]];
         var myyarray= logging_data;
         interpretdetections(myyarray);
@@ -161,7 +160,7 @@ var gaveAnswer= "noAnswer";
             file= file+csv+"\n";
           }
           
-          console.log(csv);
+          //console.log(csv);
           var encoded_file = encodeURI(file);
           var link = document.createElement("a");
           link.setAttribute("href", encoded_file);
