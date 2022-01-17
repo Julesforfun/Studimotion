@@ -8,6 +8,9 @@
     <script type="text/javascript"
     src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="{{ url_for('static',filename='js/tasksNormal.js')}}" ></script>
+    <script src="{{ url_for('static',filename='js/tasksEasy.js')}}" ></script>
+    <script src="{{ url_for('static',filename='js/tasksDifficult.js')}}" ></script>
     <script type="text/javascript">
       var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
@@ -25,7 +28,7 @@
           
         <h2 id="question">Question Text</h2>
        
-          <button id="myBtn">Show Activity</button>
+        <img src="{{ url_for('static',filename='img/taskNormal1.png')}}" alt="Pic" id="taskpic">
         
           
           
@@ -49,11 +52,21 @@
             <input type="radio" name="answer" id="d" class="answer">
             <label for="d" id="d_text">Answer</label>
           </li>
+          <li>
+            <input type="radio" name="answer" id="e" class="answer">
+            <label for="e" id="e_text">Answer</label>
+          </li>
+          <li>
+            <label for="mysolution" id= "solutiontext">Ihre Antwort:</label>
+            <input type="text" id="mysolution" name="mysolution">
+          </li>
+          
   
         </ul>
       </div>
   
       <button id="submit">Submit</button>
+      <button id="myBtn">Show Activity</button>
 
       <span id="result">?</span>
       <span id="result_stress">?</span>

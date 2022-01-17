@@ -108,7 +108,7 @@ class VideoCamera(object):
     self.counter_time = self.counter_time + 1 
     self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
 
-    pd.DataFrame(self.results_list).to_csv("/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/static/data/myfile.csv", index=None, header=None)
+    pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
     
     
   
