@@ -47,7 +47,7 @@ var isYawning = 0;
               }
               
               console.log("check confirm");
-              confirmAction_Bored(data.result_stress, data.result_yawn);
+              confirmAction_Bored(data.result_stress, data.result_yawn, data.result);
               
             }
             
@@ -77,20 +77,23 @@ var isYawning = 0;
           clearInterval(intervalID);
         }
 
-        function confirmAction_Bored(stressed, datares) {
+        function confirmAction_Bored(stressed, datayawn, databored) {
           if (stressed==0 || isYawning==1){
             console.log("Yawning = "+isYawning);
             counter_Bored= counter_Bored+1;
             console.log("bored "+ counter_Bored);
             //if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
-            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (datares==3 && difficulty!=1)){ 
+            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (datayawn==3 && difficulty!=1)){ 
             
               let confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
               //if(isYawning == 1)
-              if(datares == 3)
+              //if(datayawn == 3)
+              if(datayawn == 3 && databored==2)
               {
                 var detectionBored= ["bored-YAWNED", "not_stressed", "DETECTION BORED (YAWN)"];
                 isYawning = 0;
+                counter_Bored=0;
+                counter_Stressed=0;
                 console.log("DEZECTION YAAAAWNING");
               }else
               {

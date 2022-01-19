@@ -266,8 +266,8 @@ class VideoCamera(object):
             self.status_underchallenged=="1"
             #self.emotion=3
             self.emotion_yawn=3
-            print("müsste jetzt 3 sein")
-            print(self.emotion_yawn)
+            #print("müsste jetzt 3 sein")
+            #print(self.emotion_yawn)
 
             
                 #from pygame import mixer
@@ -283,7 +283,7 @@ class VideoCamera(object):
       else:
           self.yawn_status = False
           self.emotion_yawn=0
-          print(self.emotion_yawn)
+          #print(self.emotion_yawn)
 
       if(self.isYawning):
         if self.prev_yawn_status == True and self.yawn_status == False:
@@ -293,8 +293,8 @@ class VideoCamera(object):
           self.status_underchallenged=="0"
           #self.emotion=3
           self.emotion_yawn=3
-          print("müsste jetzt 3 sein")
-          print(self.emotion_yawn)
+          #print("müsste jetzt 3 sein")
+          #print(self.emotion_yawn)
           sleep(2)
       
       self.prev_yawn_status = self.yawn_status
