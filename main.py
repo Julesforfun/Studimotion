@@ -10,8 +10,10 @@ camera2= VideoCamera()
 def stuff():
     emo= camera2.emotion
     emo_stress= camera2.emotion_stress
+    emo_yawn=camera2.emotion_yawn
+    #print(emo_yawn)
         
-    return jsonify(result=emo, result_stress = emo_stress)
+    return jsonify(result=emo, result_stress = emo_stress, result_yawn=emo_yawn)
 
 @app.route('/')
 def index():
