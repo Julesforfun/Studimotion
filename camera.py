@@ -13,6 +13,7 @@ import pandas as pd
 class VideoCamera(object):
   emotion=0
   emotion_stress=0
+  emotion_yawn=0
   hog_face_detector = dlib.get_frontal_face_detector()
   dlib_facelandmark = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
   lastValue=0.0
@@ -24,7 +25,7 @@ class VideoCamera(object):
   lastStates=["",""]
   counter_time = 0
   csv_initalized= False
-  NumberOfTimesForYawnDetection = 5; 
+  NumberOfTimesForYawnDetection = 1; 
   counter_Yawns = 0
   isYawning = False
   yawn_status = False
@@ -134,8 +135,8 @@ class VideoCamera(object):
     #self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
     self.results_list.append([self.counter_time, moood, 0])
 
-    #pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
-    pd.DataFrame(self.results_list).to_csv("/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/static/data/myfile.csv", index=None, header=None)
+    pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
+    #pd.DataFrame(self.results_list).to_csv("/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/static/data/myfile.csv", index=None, header=None)
   
     
   def get_frame(self):
@@ -150,10 +151,10 @@ class VideoCamera(object):
     return jpeg.tobytes()
 
   def calculateEmotion(self, frame): 
-    face_classifier = cv2.CascadeClassifier('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
-    classifier=load_model('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/model.h5', compile=False)
-    #face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
-    #classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+    #face_classifier = cv2.CascadeClassifier('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+    #classifier=load_model('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+    face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+    classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5', compile=False)
     
     emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
       
@@ -259,10 +260,14 @@ class VideoCamera(object):
             else:
               self.counter_Yawns = 0
               
+          #if(self.counter_Yawns >= self.NumberOfTimesForYawnDetection and self.status=="Drowsy"):
           if(self.counter_Yawns >= self.NumberOfTimesForYawnDetection and self.status=="Drowsy"):
             cv2.putText(frame, "Tired? Get a coffee ;)", (50, 450), cv2.FONT_HERSHEY_COMPLEX, 1,(0,0,255),2)
             self.status_underchallenged=="1"
-            self.emotion=3
+            #self.emotion=3
+            self.emotion_yawn=3
+            print("müsste jetzt 3 sein")
+            print(self.emotion_yawn)
 
             
                 #from pygame import mixer
@@ -277,6 +282,8 @@ class VideoCamera(object):
           
       else:
           self.yawn_status = False
+          self.emotion_yawn=0
+          print(self.emotion_yawn)
 
       if(self.isYawning):
         if self.prev_yawn_status == True and self.yawn_status == False:
@@ -284,7 +291,10 @@ class VideoCamera(object):
           self.counter_Yawns = 0
           self.isYawning = False
           self.status_underchallenged=="0"
-          self.emotion=3
+          #self.emotion=3
+          self.emotion_yawn=3
+          print("müsste jetzt 3 sein")
+          print(self.emotion_yawn)
           sleep(2)
       
       self.prev_yawn_status = self.yawn_status

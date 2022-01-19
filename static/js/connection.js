@@ -31,10 +31,11 @@ var isYawning = 0;
             
             }else{
 
-              if (data.result==3){
+              //if (data.result==3){
+                if (data.result_yawn==3){
                 isYawning = 1;
                 document.getElementById("result").textContent="yawned";
-                current_logging.push("bored - yawned");
+                current_logging.push("bored-yawned");
                 console.log("Just yawned");
 
               }else{
@@ -46,7 +47,7 @@ var isYawning = 0;
               }
               
               console.log("check confirm");
-              confirmAction_Bored(data.result_stress);
+              confirmAction_Bored(data.result_stress, data.result_yawn);
               
             }
             
@@ -76,18 +77,21 @@ var isYawning = 0;
           clearInterval(intervalID);
         }
 
-        function confirmAction_Bored(stressed) {
+        function confirmAction_Bored(stressed, datares) {
           if (stressed==0 || isYawning==1){
             console.log("Yawning = "+isYawning);
             counter_Bored= counter_Bored+1;
             console.log("bored "+ counter_Bored);
-            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
+            //if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
+            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (datares==3 && difficulty!=1)){ 
             
               let confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
-              if(isYawning == 1)
+              //if(isYawning == 1)
+              if(datares == 3)
               {
-                var detectionBored= ["bored - YAWNED", "not_stressed", "DETECTION BORED"];
+                var detectionBored= ["bored-YAWNED", "not_stressed", "DETECTION BORED (YAWN)"];
                 isYawning = 0;
+                console.log("DEZECTION YAAAAWNING");
               }else
               {
                 var detectionBored= ["bored", "not_stressed", "DETECTION BORED"];
@@ -145,8 +149,8 @@ var isYawning = 0;
         for (i=0; i<array.length; i++){
           var singlearray = array[i];
           
-          //TODO mit yawn ==3
-          if (singlearray.length==3){
+          
+          if (singlearray.length==2){
             
             if (singlearray[0]=="not_bored" && singlearray[1]=="not_stressed"){
               singlearray.push("active");
@@ -164,8 +168,8 @@ var isYawning = 0;
               singlearray.push("bored");
 
             }
-            if (singlearray[0]=="bored - yawned" && singlearray[1]=="not_stressed"){
-              singlearray.push("bored - yawned");
+            if (singlearray[0]=="bored-yawned" && singlearray[1]=="not_stressed"){
+              singlearray.push("bored-yawned");
 
             }
           }
