@@ -25,7 +25,7 @@ class VideoCamera(object):
   lastStates=["",""]
   counter_time = 0
   csv_initalized= False
-  NumberOfTimesForYawnDetection = 1; 
+  NumberOfTimesForYawnDetection = 3; 
   counter_Yawns = 0
   isYawning = False
   yawn_status = False

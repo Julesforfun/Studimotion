@@ -24,7 +24,7 @@ function showChart() {
   
   if (graph_visible){
     graph_visible=false;
-    document.getElementById("myBtn").innerText = "Show activity";
+    document.getElementById("myBtn").innerText = "Zeige Aktivitätsgraph";
     svg.remove()
 
   }else{
@@ -35,7 +35,7 @@ function showChart() {
 
 function createChart(){
 
-  document.getElementById("myBtn").innerText = "Close activity graph";
+  document.getElementById("myBtn").innerText = "Aktivitätsgraph schließen";
   graph_visible= true;
 
   // Get the data

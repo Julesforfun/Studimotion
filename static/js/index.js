@@ -10,6 +10,9 @@ const d_text = document.getElementById('d_text')
 const e_text = document.getElementById('e_text')
 const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
+document.getElementById("cancel").onclick = function() {cancelpopUp()};
+//const cancelBtn = document.getElementById('cancel')
+
 
 var answeredCorrectNormal=[]
 fillListswithAnswers(quizDataNormal, answeredCorrectNormal)
@@ -199,3 +202,16 @@ submitBtn.addEventListener('click', () => {
      
   }
 })
+
+
+function cancelpopUp(){
+
+        if (document.getElementById("cancel").innerText == "Pop-ups ausschalten"){
+          document.getElementById("cancel").innerText = "Pop-ups einschalten"
+          showPopUp=false;
+
+        }else{
+          document.getElementById("cancel").innerText = "Pop-ups ausschalten"
+          showPopUp=true;
+        }
+      }

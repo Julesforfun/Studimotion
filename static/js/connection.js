@@ -11,6 +11,8 @@ var current_logging= []
 var logging_data= [["current_var_bored/TN", "current_var_stressed/Diff", "interpretation/answ"]]
 var gaveAnswer= "noAnswer";
 var isYawning = 0;
+var showPopUp=true;
+
 
     
       function update_values() {
@@ -47,7 +49,10 @@ var isYawning = 0;
               }
               
               console.log("check confirm");
+              
               confirmAction_Bored(data.result_stress, data.result_yawn, data.result);
+              
+             
               
             }
             
@@ -55,7 +60,9 @@ var isYawning = 0;
             if(data.result_stress == 1)
             {
               document.getElementById("result_stress").textContent="stressed";
+             
               confirmAction_Stressed(data.result);
+              
               current_logging.push("stressed");
             }else{
               document.getElementById("result_stress").textContent="not sressed";
@@ -78,6 +85,7 @@ var isYawning = 0;
         }
 
         function confirmAction_Bored(stressed, datayawn, databored) {
+          confirmAction=false;
           if (stressed==0 || isYawning==1){
             console.log("Yawning = "+isYawning);
             counter_Bored= counter_Bored+1;
@@ -85,15 +93,17 @@ var isYawning = 0;
             //if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
             if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (datayawn==3 && difficulty!=1)){ 
             
-              let confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
-              //if(isYawning == 1)
+              if (showPopUp){
+                confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
+              }
+              
               //if(datayawn == 3)
               if(datayawn == 3 && databored==2)
               {
                 var detectionBored= ["bored-YAWNED", "not_stressed", "DETECTION BORED (YAWN)"];
                 isYawning = 0;
-                counter_Bored=0;
-                counter_Stressed=0;
+                //counter_Bored=0;
+                //counter_Stressed=0;
                 console.log("DEZECTION YAAAAWNING");
               }else
               {
@@ -108,14 +118,29 @@ var isYawning = 0;
                 getQuizData(difficulty+1);
               } 
             }
+            //nur für logging relevant
+            if (difficulty==1){
+              var detectionBored=[]
+              if ((counter_Bored>numberOfTimesForDetection )){ 
+                detectionBored= ["bored", "not_stressed", "DETECTION BORED"];
+                counter_Bored=0;
+              }
+              if (datayawn==3 && databored==2 ){
+                detectionBored= ["bored-YAWNED", "not_stressed", "DETECTION BORED (YAWN)"];
+              }
+              logging_data.push(detectionBored);  
+            }
+            
           }
         }
 
         function confirmAction_Stressed(bored) {
+          confirmAction=false;
           counter_Stressed= counter_Stressed+1;
           console.log("stressed "+ counter_Stressed);
-          if (counter_Stressed>numberOfTimesForDetection &&difficulty!=-1){ 
-            let confirmAction = confirm("Sie scheinen gestresst zu sein. Sind Sie überfordert?");
+          if (counter_Stressed>numberOfTimesForDetection &&difficulty!=-1){
+            if (showPopUp){ 
+              confirmAction = confirm("Sie scheinen gestresst zu sein. Sind Sie überfordert?");}
             var detectionBored= ["not_bored", "stressed", "DETECTION STRESSED"];
             logging_data.push(detectionBored);
             counter_Stressed=0;
@@ -125,6 +150,12 @@ var isYawning = 0;
               saveLoggingData(currentQuiz, difficulty, "noAnswer");
               getQuizData(difficulty-1);              
             } 
+          }
+          //nur für logging relevant 
+          if (difficulty==-1 &&counter_Stressed>numberOfTimesForDetection){
+            var detectionBored= ["not_bored", "stressed", "DETECTION STRESSED"];
+            logging_data.push(detectionBored); 
+            counter_Stressed=0      
           }
         }
       
@@ -207,6 +238,8 @@ var isYawning = 0;
         }, 1000);
         logging_data=[["current_var_bored/TN", "current_var_stressed/Diff", "interpretation/answ"]];   
       }
+
+      
 
       
 
