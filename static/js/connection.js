@@ -4,12 +4,13 @@ var intervalID = setInterval(update_values,1000);
 var counter_Bored=0
 var counter_Stressed=0
 var difficulty=0
-var numberOfTimesForDetection=3;
+var numberOfTimesForDetection=5;
 let currentQuiz = 0
 var currentQuizData = quizDataNormal[currentQuiz]
 var current_logging= []
 var logging_data= [["current_var_bored/TN", "current_var_stressed/Diff", "interpretation/answ"]]
 var gaveAnswer= "noAnswer";
+var isYawning = 0;
 
     
       function update_values() {
@@ -19,6 +20,7 @@ var gaveAnswer= "noAnswer";
                    
           function(data) {
             $('#result').text(data.result);
+            console.log("value result = "+ data.result);
             if (data.result==0){
               document.getElementById("result").textContent="active";
               current_logging.push("not_bored");
@@ -26,12 +28,28 @@ var gaveAnswer= "noAnswer";
               if (data.result==1){
                 document.getElementById("result").textContent="blinking";
               }
-
+            
             }else{
-              document.getElementById("result").textContent="drowsy";
+
+              if (data.result==3){
+                isYawning = 1;
+                document.getElementById("result").textContent="yawned";
+                current_logging.push("bored - yawned");
+                console.log("Just yawned");
+
+              }else{
+
+                
+                document.getElementById("result").textContent="drowsy";
+                current_logging.push("bored");
+
+              }
+              
+              console.log("check confirm");
               confirmAction_Bored(data.result_stress);
-              current_logging.push("bored");
+              
             }
+            
 
             if(data.result_stress == 1)
             {
@@ -59,13 +77,21 @@ var gaveAnswer= "noAnswer";
         }
 
         function confirmAction_Bored(stressed) {
-          if (stressed==0){
+          if (stressed==0 || isYawning==1){
+            console.log("Yawning = "+isYawning);
             counter_Bored= counter_Bored+1;
             console.log("bored "+ counter_Bored);
-            if (counter_Bored>numberOfTimesForDetection && difficulty!=1){ 
+            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
             
               let confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
-              var detectionBored= ["bored", "not_stressed", "DETECTION BORED"];
+              if(isYawning == 1)
+              {
+                var detectionBored= ["bored - YAWNED", "not_stressed", "DETECTION BORED"];
+                isYawning = 0;
+              }else
+              {
+                var detectionBored= ["bored", "not_stressed", "DETECTION BORED"];
+              }
               logging_data.push(detectionBored);
               counter_Bored=0;
               counter_Stressed=0;
@@ -94,7 +120,6 @@ var gaveAnswer= "noAnswer";
             } 
           }
         }
-
       
         function adaptDiffCircle(value){
           
@@ -121,7 +146,7 @@ var gaveAnswer= "noAnswer";
           var singlearray = array[i];
           
           //TODO mit yawn ==3
-          if (singlearray.length==2){
+          if (singlearray.length==3){
             
             if (singlearray[0]=="not_bored" && singlearray[1]=="not_stressed"){
               singlearray.push("active");
@@ -137,8 +162,12 @@ var gaveAnswer= "noAnswer";
             }
             if (singlearray[0]=="bored" && singlearray[1]=="not_stressed"){
               singlearray.push("bored");
-            }
 
+            }
+            if (singlearray[0]=="bored - yawned" && singlearray[1]=="not_stressed"){
+              singlearray.push("bored - yawned");
+
+            }
           }
          
         }

@@ -24,7 +24,12 @@ class VideoCamera(object):
   lastStates=["",""]
   counter_time = 0
   csv_initalized= False
-
+  NumberOfTimesForYawnDetection = 5; 
+  counter_Yawns = 0
+  isYawning = False
+  yawn_status = False
+  prev_yawn_status = False
+  yawns = 0
 
   def __init__(self):
       self.video = cv2.VideoCapture(0)
@@ -107,6 +112,9 @@ class VideoCamera(object):
 
   def detectionInterpreter(self):   
         
+        if (self.status_underchallenged=="2"):
+          return "0";
+        
         if (self.status_underchallenged=="1" and self.status_stress=="1"):
           return "2";
             
@@ -126,24 +134,27 @@ class VideoCamera(object):
     #self.results_list.append([self.counter_time, self.status_underchallenged, self.status_stress])
     self.results_list.append([self.counter_time, moood, 0])
 
-    pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
-    
-    
+    #pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
+    pd.DataFrame(self.results_list).to_csv("/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/static/data/myfile.csv", index=None, header=None)
   
- 
+    
   def get_frame(self):
     ret, frame = self.video.read()
+    
     self.calculateEyes(frame)
     self.calculateEmotion(frame)
     self.detectYawn(frame)
     self.save_to_csv()
     ret, jpeg = cv2.imencode('.jpg', frame)
-      
+    
     return jpeg.tobytes()
 
   def calculateEmotion(self, frame): 
-    face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
-    classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+    face_classifier = cv2.CascadeClassifier('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+    classifier=load_model('/Users/yara5/Documents/Master/Semester_3/AffectiveComputing/Projekt/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+    #face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+    #classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+    
     emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
       
     #_, frame = self.video.read()
@@ -163,7 +174,7 @@ class VideoCamera(object):
 
               prediction = classifier.predict(roi)[0]
               label = emotion_labels[prediction.argmax()]
-              if(label=='Angry' or label=="Sad" or label=="Disgust"):
+              if(label=='Angry' or label=="Fear" or label=="Disgust"):
                 self.status_stress = "1"
                 #print(label + " -> stressed")
                 self.emotion_stress=1
@@ -233,33 +244,50 @@ class VideoCamera(object):
 
   def detectYawn (self, frame):
       #cap = cv2.VideoCapture(0)
-      yawns = 0
-      yawn_status = False
       
       #ret, frame = cap.read()
       image_with_landmarks, lip_distance = self.mouth_open(frame)
-
-      prev_yawn_status = yawn_status
-
+      
       if lip_distance > 35:
-          yawn_status = True
-          cv2.putText(frame, "Tired? Get a coffee ;)", (50, 450), cv2.FONT_HERSHEY_COMPLEX, 1,(0,0,255),2)
-          #print("yawning")
-
-              #from pygame import mixer
-              #mixer.init()
-              #mixer.music.load('sth.mp3')
-              #mixer.music.play()
-
-          output_text = "Yawn Count: " + str(yawns + 1)
+          self.yawn_status = True
+          print("counter Yawns = " + str(self.counter_Yawns))
+          if(self.counter_Yawns == 0):
+            self.counter_Yawns += 1
+          else:
+            if(self.prev_yawn_status == True):
+              self.counter_Yawns += 1
+            else:
+              self.counter_Yawns = 0
               
-          cv2.putText(frame, output_text, (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,127),2)
+          if(self.counter_Yawns >= self.NumberOfTimesForYawnDetection and self.status=="Drowsy"):
+            cv2.putText(frame, "Tired? Get a coffee ;)", (50, 450), cv2.FONT_HERSHEY_COMPLEX, 1,(0,0,255),2)
+            self.status_underchallenged=="1"
+            self.emotion=3
+
+            
+                #from pygame import mixer
+                #mixer.init()
+                #mixer.music.load('sth.mp3')
+                #mixer.music.play()
+
+            output_text = "Yawn Count: " + str(self.yawns + 1)
+            self.isYawning = True
+                
+            cv2.putText(frame, output_text, (50, 50), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,127),2)
+          
       else:
-          yawn_status = False
+          self.yawn_status = False
 
-      if prev_yawn_status == True and yawn_status == False:
-          yawns += 1
-              
+      if(self.isYawning):
+        if self.prev_yawn_status == True and self.yawn_status == False:
+          self.yawns += 1
+          self.counter_Yawns = 0
+          self.isYawning = False
+          self.status_underchallenged=="0"
+          self.emotion=3
+          sleep(2)
+      
+      self.prev_yawn_status = self.yawn_status
       #cv2.imshow('Live Landmarks', image_with_landmarks)
       #cv2.imshow('Yawn Detection', frame)
 
