@@ -12,7 +12,8 @@ const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
 document.getElementById("cancel").onclick = function() {cancelpopUp()};
 document.getElementById("higher").style.visibility = "hidden"
-          document.getElementById("lower").style.visibility = "hidden"
+document.getElementById("lower").style.visibility = "hidden"
+document.getElementById("space").style.visibility = "hidden"
 document.getElementById("lower").onclick = function() {decreaseDifficulty()};
 document.getElementById("higher").onclick = function() {increaseDifficulty()};
 
