@@ -11,6 +11,11 @@ const e_text = document.getElementById('e_text')
 const eingabeLabel = document.getElementById('solutiontext')
 const submitBtn = document.getElementById('submit')
 document.getElementById("cancel").onclick = function() {cancelpopUp()};
+document.getElementById("higher").style.visibility = "hidden"
+          document.getElementById("lower").style.visibility = "hidden"
+document.getElementById("lower").onclick = function() {decreaseDifficulty()};
+document.getElementById("higher").onclick = function() {increaseDifficulty()};
+
 //const cancelBtn = document.getElementById('cancel')
 
 
@@ -53,6 +58,7 @@ function getQuizData(value){
   
   difficulty=value;
   setTimeout(function() { 
+    handleVisibilityofLowerHigherButtons();
     setQuiz(value); 
 }, 1000);
   setTimeout(function() { 
@@ -209,9 +215,43 @@ function cancelpopUp(){
         if (document.getElementById("cancel").innerText == "Pop-ups ausschalten"){
           document.getElementById("cancel").innerText = "Pop-ups einschalten"
           showPopUp=false;
+          document.getElementById("higher").style.visibility = "visible"
+          document.getElementById("lower").style.visibility = "visible"
 
         }else{
           document.getElementById("cancel").innerText = "Pop-ups ausschalten"
           showPopUp=true;
+          document.getElementById("higher").style.visibility = "hidden"
+          document.getElementById("lower").style.visibility = "hidden"
         }
       }
+
+function increaseDifficulty(){
+
+  getQuizData(difficulty+1);
+
+}
+
+function decreaseDifficulty(){
+  getQuizData(difficulty-1); 
+}
+
+function handleVisibilityofLowerHigherButtons(){
+
+  if (difficulty==1){
+    document.getElementById("higher").style.visibility = "hidden"
+  }else{
+    document.getElementById("higher").style.visibility = "visible"
+  }
+  if (difficulty==-1){
+    document.getElementById("lower").style.visibility = "hidden"
+  }else{
+    document.getElementById("lower").style.visibility = "visible"
+  }
+
+  if (difficulty==0){
+    document.getElementById("lower").style.visibility = "visible"
+    document.getElementById("higher").style.visibility = "visible"
+  }
+  
+}
