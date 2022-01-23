@@ -185,7 +185,8 @@ submitBtn.addEventListener('click', () => {
          saveCorrectAnswers(true);
          gaveAnswer= "gaveCorrectAnswer";
       }else{
-        saveCorrectAnswers(false);
+        //saveCorrectAnswers(false);
+        saveCorrectAnswers(true);
         gaveAnswer= "gaveWrongAnswer";
       }
 

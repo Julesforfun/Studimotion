@@ -4,7 +4,8 @@ var intervalID = setInterval(update_values,1000);
 var counter_Bored=0
 var counter_Stressed=0
 var difficulty=0
-var numberOfTimesForDetection=5;
+var numberOfTimesForDetection_stressed=3;
+var numberOfTimesForDetection_bored=10;
 let currentQuiz = 0
 var currentQuizData = quizDataNormal[currentQuiz]
 var current_logging= []
@@ -91,7 +92,7 @@ var showPopUp=true;
             counter_Bored= counter_Bored+1;
             console.log("bored "+ counter_Bored);
             //if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (isYawning==1 && difficulty!=1)){ 
-            if ((counter_Bored>numberOfTimesForDetection && difficulty!=1 ) || (datayawn==3 && difficulty!=1)){ 
+            if ((counter_Bored>numberOfTimesForDetection_bored && difficulty!=1 ) || (datayawn==3 && difficulty!=1)){ 
             
               if (showPopUp){
                 confirmAction = confirm("Sie scheinen gelangweilt zu sein. Sind Sie unterfordert?");
@@ -111,7 +112,7 @@ var showPopUp=true;
               }
               logging_data.push(detectionBored);
               counter_Bored=0;
-              counter_Stressed=0;
+              //counter_Stressed=0;
               if (confirmAction) {
                 alert("Aufgaben werden angepasst");
                 saveLoggingData(currentQuiz, difficulty, "noAnswer");
@@ -121,7 +122,7 @@ var showPopUp=true;
             //nur für logging relevant
             if (difficulty==1){
               var detectionBored=[]
-              if ((counter_Bored>numberOfTimesForDetection )){ 
+              if ((counter_Bored>numberOfTimesForDetection_stressed )){ 
                 detectionBored= ["bored", "not_stressed", "DETECTION BORED"];
                 counter_Bored=0;
               }
@@ -138,7 +139,7 @@ var showPopUp=true;
           confirmAction=false;
           counter_Stressed= counter_Stressed+1;
           console.log("stressed "+ counter_Stressed);
-          if (counter_Stressed>numberOfTimesForDetection &&difficulty!=-1){
+          if (counter_Stressed>numberOfTimesForDetection_stressed &&difficulty!=-1){
             if (showPopUp){ 
               confirmAction = confirm("Sie scheinen gestresst zu sein. Sind Sie überfordert?");}
             var detectionBored= ["not_bored", "stressed", "DETECTION STRESSED"];
@@ -152,7 +153,7 @@ var showPopUp=true;
             } 
           }
           //nur für logging relevant 
-          if (difficulty==-1 &&counter_Stressed>numberOfTimesForDetection){
+          if (difficulty==-1 &&counter_Stressed>numberOfTimesForDetection_stressed){
             var detectionBored= ["not_bored", "stressed", "DETECTION STRESSED"];
             logging_data.push(detectionBored); 
             counter_Stressed=0      
