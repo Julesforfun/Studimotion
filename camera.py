@@ -85,9 +85,9 @@ class VideoCamera(object):
       self.EAR = round(self.EAR,2)
       if self.EAR<0.26:
         if self.lastValue<0.26:
-          cv2.putText(frame,"DROWSY",(20,100),
-          cv2.FONT_HERSHEY_SIMPLEX,3,(0,0,255),4)
-          cv2.putText(frame,"Are you Sleepy?",(20,400),
+          #cv2.putText(frame,"DROWSY",(20,100),
+          #cv2.FONT_HERSHEY_SIMPLEX,3,(0,0,255),4)
+          cv2.putText(frame,"Gelangweilt?",(20,400),
           cv2.FONT_HERSHEY_SIMPLEX,2,(0,0,255),4)
           self.status="Drowsy"
           self.status_underchallenged = "1"
@@ -177,11 +177,11 @@ class VideoCamera(object):
               label = emotion_labels[prediction.argmax()]
               if(label=='Angry' or label=="Fear" or label=="Disgust"):
                 self.status_stress = "1"
-                #print(label + " -> stressed")
+                print(label + " -> stressed")
                 self.emotion_stress=1
               else:
                 self.status_stress = "0"
-                #print(label + " -> not stressed")
+                print(label + " -> not stressed")
                 self.emotion_stress=0
                 
               label_position = (x,y-10)

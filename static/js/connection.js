@@ -13,6 +13,7 @@ var logging_data= [["current_var_bored/TN", "current_var_stressed/Diff", "interp
 var gaveAnswer= "noAnswer";
 var isYawning = 0;
 var showPopUp=true;
+popUpsCanceled= true;
 
 
     
@@ -60,17 +61,21 @@ var showPopUp=true;
 
             if(data.result_stress == 1)
             {
+              console.log("stressed")
               document.getElementById("result_stress").textContent="stressed";
              
               confirmAction_Stressed(data.result);
               
               current_logging.push("stressed");
+              
             }else{
-              document.getElementById("result_stress").textContent="not sressed";
+              document.getElementById("result_stress").textContent="not stressed";
               current_logging.push("not_stressed");
+              console.log("notstressed")
             }
 
 
+            console.log(data.result_stress);
             logging_data.push(current_logging);
             //saveLoggingData(0,0);
             
@@ -87,6 +92,7 @@ var showPopUp=true;
 
         function confirmAction_Bored(stressed, datayawn, databored) {
           confirmAction=false;
+          confirmChangeQuestion=false;
           if (stressed==0 || isYawning==1){
             console.log("Yawning = "+isYawning);
             counter_Bored= counter_Bored+1;
@@ -114,10 +120,15 @@ var showPopUp=true;
               counter_Bored=0;
               //counter_Stressed=0;
               if (confirmAction) {
+                confirmChangeQuestion = confirm("Möchten Sie direkt zur schwereren Aufgabe wechseln?");
+              } 
+              if (confirmChangeQuestion){
                 alert("Aufgaben werden angepasst");
                 saveLoggingData(currentQuiz, difficulty, "noAnswer");
                 getQuizData(difficulty+1);
-              } 
+              }else{
+                difficulty=difficulty+1;
+              }
             }
             //nur für logging relevant
             if (difficulty==1){
@@ -147,10 +158,15 @@ var showPopUp=true;
             counter_Stressed=0;
             counter_Bored=0;
             if (confirmAction) {
+              confirmChangeQuestion = confirm("Möchten Sie direkt zur leichteren Aufgabe wechseln?");
+            } 
+            if (confirmChangeQuestion){
               alert("Aufgaben werden angepasst");
               saveLoggingData(currentQuiz, difficulty, "noAnswer");
-              getQuizData(difficulty-1);              
-            } 
+              getQuizData(difficulty-1);
+            }else{
+              difficulty=difficulty-1;
+            }
           }
           //nur für logging relevant 
           if (difficulty==-1 &&counter_Stressed>numberOfTimesForDetection_stressed){

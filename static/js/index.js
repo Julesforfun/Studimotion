@@ -58,6 +58,7 @@ function getQuizData(value){
 }, 1000);
   
   difficulty=value;
+  
   setTimeout(function() { 
     handleVisibilityofLowerHigherButtons();
     setQuiz(value); 
@@ -103,6 +104,7 @@ function getNextQuestionIndex(mylist){
 function loadQuiz() {
 
   deselectAnswers();
+  const taskStart = Date.now();
   
 
   if (currentQuizData.eingabe=="yes"){
@@ -217,12 +219,14 @@ function cancelpopUp(){
         if (document.getElementById("cancel").innerText == "Pop-ups ausschalten"){
           document.getElementById("cancel").innerText = "Pop-ups einschalten"
           showPopUp=false;
+          popUpsCanceled= true;
           document.getElementById("higher").style.visibility = "visible"
           document.getElementById("lower").style.visibility = "visible"
 
         }else{
           document.getElementById("cancel").innerText = "Pop-ups ausschalten"
           showPopUp=true;
+          popUpsCanceled= false;
           document.getElementById("higher").style.visibility = "hidden"
           document.getElementById("lower").style.visibility = "hidden"
         }
