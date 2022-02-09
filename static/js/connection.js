@@ -4,7 +4,7 @@ var intervalID = setInterval(update_values,1000);
 var counter_Bored=0
 var counter_Stressed=0
 var difficulty=0
-var numberOfTimesForDetection_stressed=5;
+var numberOfTimesForDetection_stressed=3;
 var numberOfTimesForDetection_bored=10;
 let currentQuiz = 0
 var currentQuizData = quizDataNormal[currentQuiz]
@@ -122,11 +122,12 @@ popUpsCanceled= true;
               if (confirmAction) {
                 confirmChangeQuestion = confirm("Möchten Sie direkt zur schwereren Aufgabe wechseln?");
               } 
-              if (confirmChangeQuestion){
+              if (confirmChangeQuestion & confirmAction){
                 alert("Aufgaben werden angepasst");
                 saveLoggingData(currentQuiz, difficulty, "noAnswer");
                 getQuizData(difficulty+1);
-              }else{
+              }
+              if (!confirmChangeQuestion && confirmAction){
                 difficulty=difficulty+1;
               }
             }
@@ -160,11 +161,12 @@ popUpsCanceled= true;
             if (confirmAction) {
               confirmChangeQuestion = confirm("Möchten Sie direkt zur leichteren Aufgabe wechseln?");
             } 
-            if (confirmChangeQuestion){
+            if (confirmChangeQuestion && confirmAction){
               alert("Aufgaben werden angepasst");
               saveLoggingData(currentQuiz, difficulty, "noAnswer");
               getQuizData(difficulty-1);
-            }else{
+            }
+            if (!confirmChangeQuestion && confirmAction){
               difficulty=difficulty-1;
             }
           }
