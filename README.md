@@ -147,4 +147,4 @@ model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e
 ```
 
 
-Die resultierende model.h5 Datei kann nun als model in dem Studimotion Projekt verwendet werden. Hierzu die vorhandene model.h5 Datei (im Ordner "emotionDetectionKeras") mit dem neu trainierten Model ersetzen. 
+Die resultierende model.h5 Datei kann nun in dem Studimotion Projekt verwendet werden. Hierzu die vorhandene model.h5 Datei (im Ordner "emotionDetectionKeras") mit dem neu trainierten Model ersetzen. 
