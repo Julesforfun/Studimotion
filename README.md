@@ -36,9 +36,9 @@ Die folgenden Packages mit Versionen wurden für das Projekt verwendet.
 
 ### Durchführung
 
-Um das Model zu trainieren, muss zunächst der Datensatz über [diesen Link](https://drive.google.com/file/d/1uhz5SVoO8cGRsaB1iYtirhcz80mVPhBh/view?usp=sharing) heruntergeladen werden. Dieser basiert auf dem "Face expression recognition dataset", welches wiederum auf Google's FER-2013 Datensatz basiert und wurde bereits in die richtige Ordnerstruktur gebracht. Das data.zip nun auspacken.
+Um das Model zu trainieren, muss zunächst der Datensatz über [diesen Link](https://drive.google.com/file/d/1uhz5SVoO8cGRsaB1iYtirhcz80mVPhBh/view?usp=sharing) heruntergeladen werden. Dieser basiert auf dem "Face expression recognition dataset", welcher wiederum auf Google's FER-2013 Datensatz basiert und wurde bereits in die richtige Ordnerstruktur gebracht. Das data.zip nun auspacken.
 
-Als nächstes muss die Datei `haarcascade_frontalface_default.xml` über [diesen Link] (https://drive.google.com/file/d/1Bu9QLFA0XSx6mrQ1Z01HMZtO7B9o-T-I/view?usp=sharing) heruntergeladen und in denselben Ordner, der den "data" Ordner beinhaltet, verschoben werden.
+Als nächstes muss die Datei `haarcascade_frontalface_default.xml` über [diesen Link](https://drive.google.com/file/d/1Bu9QLFA0XSx6mrQ1Z01HMZtO7B9o-T-I/view?usp=sharing) heruntergeladen und in denselben Ordner, der den "data" Ordner beinhaltet, verschoben werden.
 
 Der folgende Code muss nun in der Ordnerhierarchie auf Höhe des "data" Ordner ausgeführt werden:
 
@@ -147,4 +147,4 @@ model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e
 ```
 
 
-Die resultierende model.h5 Datei kann nun als model in dem Studimotion Projekt verwendet werden. Dazu einfach die vorhandene model.h5 Datei (im Ordner "emotionDetectionKeras") mit dem neu trainierten Model ersetzen. 
+Die resultierende model.h5 Datei kann nun als model in dem Studimotion Projekt verwendet werden. Hierzu die vorhandene model.h5 Datei (im Ordner "emotionDetectionKeras") mit dem neu trainierten Model ersetzen. 
