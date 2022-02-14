@@ -38,7 +38,7 @@ Die folgenden Packages mit Versionen wurden für das Projekt verwendet.
 
 Um das Model zu trainieren, muss zunächst der Datensatz über [diesen Link](https://drive.google.com/file/d/1uhz5SVoO8cGRsaB1iYtirhcz80mVPhBh/view?usp=sharing) heruntergeladen werden. Dieser basiert auf dem "Face expression recognition dataset", welcher wiederum auf Google's FER-2013 Datensatz basiert und wurde bereits in die richtige Ordnerstruktur gebracht. Das data.zip nun auspacken.
 
-Als nächstes muss die Datei `haarcascade_frontalface_default.xml` über [diesen Link] (https://drive.google.com/file/d/1Bu9QLFA0XSx6mrQ1Z01HMZtO7B9o-T-I/view?usp=sharing) heruntergeladen und in denselben Ordner, der den "data" Ordner beinhaltet, verschoben werden.
+Als nächstes muss die Datei `haarcascade_frontalface_default.xml` über [diesen Link](https://drive.google.com/file/d/1Bu9QLFA0XSx6mrQ1Z01HMZtO7B9o-T-I/view?usp=sharing) heruntergeladen und in denselben Ordner, der den "data" Ordner beinhaltet, verschoben werden.
 
 Der folgende Code muss nun in der Ordnerhierarchie auf Höhe des "data" Ordner ausgeführt werden:
 
