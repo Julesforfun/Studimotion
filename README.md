@@ -1,5 +1,25 @@
 # STUDIMOTION
 
+## Projekt vorbereiten
+
+Um das Projekt vorzubereiten müssen in `camera.py` die folgenden Links neu gesetzt werden:
+
+1. In Zeile 138 muss `/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv` mit dem entsprechendem Pfad des eigenen Computers zur `Studimotion/static/data/myfile.csv` Datei ersetzt werden.
+```python
+pd.DataFrame(self.results_list).to_csv("/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/static/data/myfile.csv", index=None, header=None)
+```
+
+2. In Zeile 156 muss `Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml` mit dem entsprechendem Pfad des eigenen Computers zur `Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml` Datei ersetzt werden.
+```python
+face_classifier = cv2.CascadeClassifier('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/haarcascade_frontalface_default.xml')
+```
+
+3. In Zeile 157 muss `/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5` mit dem entsprechendem Pfad des eigenen Computers zur `Studimotion/emotionDetectionKeras/model.h5` Datei ersetzt werden.
+```python
+classifier=load_model('/Users/sophiasigethy/Desktop/Uni/Master/3.Semester/AffectiveComputing/NEWREPOSITORY/Studimotion/emotionDetectionKeras/model.h5', compile=False)
+```    
+
+## Projekt starten
 Um das Projekt 'Studimotion' zu starten, muss main.py über das Terminal ausgeführt werden, zB. mit
 `python main.py`.
 Danach wird die Adresse angegeben, unter der man die Webapp findet. Diese nun öffnen.
