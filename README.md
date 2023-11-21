@@ -1,5 +1,9 @@
 # STUDIMOTION
 
+Digitalization has revolutionised learning as digital learning apps are becoming more and more popular. However, common learning apps are usually unable to react accordingly to their users’ mood or emotions. Here, Affective Computing offers a new opportunity. By applying Affective Computing approaches, intelligent systems become able to detect, infer or interpret human emotions. We intend to take advantage of this, in order to avoid certain negative emotions while using learning apps. Our goal is to create an enjoyable and enhanced learning experience and thereby increase intrinsic motivation, improve memory recall, and prevent the avoidance of performance situations. To this end, we focused on the avoidance of under- and overload. In this work, we present Studimotion - a Web Application capable of customising the difficulty level of tasks based on emotion recognition. Based on our insights we have gained through our research on related work, we implemented a Web App that is able to detect over- and underload. Subsequently, we conducted a study to evaluate whether our application could indeed correctly detect these emotions. In addition, we also investigated how the concept is perceived and evaluated by the participants. The results showed that underchallenge was detected with a probability of 66.66 % and overchallenge with 62.22 %. Furthermore, the majority of participants welcomed the concept of Studimotion and would use it in real life. Some further interesting observations also showed how the concept could be improved in the future.
+
+## Start
+
 Um das Projekt 'Studimotion' zu starten, muss main.py über das Terminal ausgeführt werden, zB. mit
 `python main.py`.
 Danach wird die Adresse angegeben, unter der man die Webapp findet. Diese nun öffnen.
